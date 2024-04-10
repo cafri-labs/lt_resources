@@ -1,0 +1,24 @@
+project:
+  type: website
+
+website:
+  title: "LT-GEE Lessons and Resources"
+  site-url: https://cafri-labs.github.io/lab-manual/
+  repo-url: https://github.com/cafri-labs/lab-manual
+  repo-actions: [edit,issue]
+  reader-mode: true
+  page-navigation: true
+  sidebar:
+    style: docked
+    search: true
+    contents:
+     - index.qmd
+     - getting_started.qmd
+     - tuning.qmd
+     - timesync.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+

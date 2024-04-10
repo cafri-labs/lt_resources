@@ -1,0 +1,48 @@
+# Getting Started
+
+## Recommended papers and resources
+Both the original LandTrendr paper [Kennedy et al. 2010](https://sciencedirect.com/science/article/pii/S0034425710002245?via%3Dihub) and the GEE engine implementation paper [Kennedy et al. 2018](https://www.mdpi.com/2072-4292/10/5/691) are excellent jumping off points for understanding how the algorithm works.   
+
+For more specific information on LandTrendr in GEE, the holy grail is the [eMapR LT GEE Guide](https://emapr.github.io/LT-GEE/index.html). This document walks you through running LandTrendr in GEE step by step, with example code. Speaking of code, most of us in the CAFRI lab use the [eMapR API code](https://emapr.github.io/LT-GEE/example-scripts.html) (or derivatives of it) when running LandTrendr. These scripts are the easiest place to start if you would like to run LandTrendr on your own. For quick reference, the [GEE developers guide](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr) has good information about algorithm parameter defaults.   
+
+For those who may be interested in exploring LandTrendr without wading into running the algorithm themselves, the eMapR group have also developed several [UI applications](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr) of LandTrendr that offer several different ways to interact with LandTrendr timeseries data.
+
+
+## Understanding algorithm parameters
+The LandTrendr algorithm has several parameters that a user can adjust to control how the algorithm segments the time series of spectral data. While each of these parameters serves a specific purpose, there are some that we have found to be more useful than others. For more detailed discussion of each parameter, and their sensitivity, see [Kennedy et al. 2010](https://sciencedirect.com/science/article/pii/S0034425710002245?via%3Dihub). For information on adjusting these parameters for using Landtrendr in the Northern Forest Region see [Algorithm Tuning](tuning.qmd)  
+
+### Recovery Threshold
+The recovery threshold parameter sets the minimum allowable length of time after a disturbance event for spectral recovery. That is, this parameter control what length of time is 'too fast' to see a recovery of spectral values. By default this time period is 4 years (recovery period is the inverse of recovery threshold, 0.25 = 4 year recovery period) which in the Northeast is quite a long time, as our forest disturbance events tend to be low intensity and there is often advanced regeneration ready to fill any new canopy gaps. This parameter is the first parameter that we adjust in the CAFRI lab, often setting it to 0.75 (see [Algorithm Tuning](tuning.qmd) for more).
+
+### Max Segments
+This parameter is the only algorithm parameter without a default value as the appropriate number of segments depends on how long of a time period you are studying. For example, if you have a 3 year time period you wouldn't want to have the same maximum number of segments as a 30 year time period, otherwise you would have a segmentation that is much more complex than would be reasonable for a short amount of time. Therefore the general rule is, the longer the time period, the more segments that you need.
+
+```{r, echo = FALSE}
+library(kableExtra)
+
+data <- read.csv("files/LTparams.csv")
+
+kbl(data[1:8,],
+      align = "llc",
+    caption = "LandTrendr Segmentation Parameters") %>% kable_styling("striped")
+
+```
+### Mapping Parameters
+There is also a second set of parameters that are easily adjusted by the user that control which parts of the segmented time series are exported to a change map output. These parameters can greatly affect how your change map appears, and as such are important to understand. For more details on these parameters see the [eMapR API documentation](https://emapr.github.io/LT-GEE/api.html#getchangemap).
+
+```{r, echo = FALSE}
+
+data <- readr::read_csv("files/LTparams.csv", show_col_types = FALSE)
+rownames(data) <- NULL
+
+kbl(data[9:14,1:2],
+      align = "llc",
+    caption = "LandTrendr Change Map Parameters") %>% kable_styling("striped")
+
+```
+
+## Selecting imagery 
+
+One thing to be aware of when you are running LandTrendr is what imagery you are feeding into the algorithm. If you are using one of the eMapR scripts, the selection of imagery happens under the hood in a separate piece of code that is called to actually run the algorithm. As of April 2024, all the eMapR scripts default to Collection 2 Landsat imagery. For most users, who want to run Landtrendr on Landsat imagery, this is not a problem. However, if you want to use other timeseries data or if you are generating outputs over long periods of time, you may need to adjust this. 
+
+Additionally, if you are using the eMapR scripts, their API is designed to automatically be compatible with [many common spectral indcies](https://emapr.github.io/LT-GEE/api.html#spectral-index-codes) which makes it easy to switch between indices. In the CAFRI lab we almost always run LandTrendr on NBR, as we have found it to have the best performance. 

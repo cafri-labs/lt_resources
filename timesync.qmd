@@ -1,0 +1,14 @@
+# Time Sync
+
+Checking the accuracy of your LandTrendr outputs requires a separate set of forest disturbance data. LandTrendr was developed with a companion program for developing reference data called TimeSync [(Cohen et al. 2010)](https://www.sciencedirect.com/science/article/pii/S0034425710002269?casa_token=5dwPh35iYXEAAAAA:JAHBTinrPXKX1c33228fJrUDY0ZAv9Wczlm7gXrGik8lvaEWdvlPkADw4F46sNNEnj4IhOStdQ). For CAFRI members in the past, [gaining access](https://timesync.forestry.oregonstate.edu/Projects.html) to this program has been a challenging, requiring lots of chasing the system administrators around by email. Using the program can also be some frustrating, as it doesn’t allow for any customization to the labeling process, however we have not found or created a better alternative yet (maybe you will!). The eMapR group does have a [desktop version](https://github.com/eMapR/TimeSync-Legacy) for windows computers available, but this has not yet been tested by any CAFRI personnel.
+
+
+## Using TimeSync
+
+Once you are able to set up a timesync project, using the software is fairly straight forward. The [user manual](https://timesync.forestry.oregonstate.edu/tutorial.html) is the best available instructional document that we have found. The mentioned online tutorial with examples no longer appears to exist. Some disturbance types are difficult to distinguish based on spectral trajectory alone, and we found it to be helpful to have auxillery imagery to compare with the data presented in timesync. For this imagery we used the historical imagery in the Desktop version of Google Earth. This interface was easy to use, allows the user to import shapefiles (ie. your timesync plot locaions), and requires no local hosting of imagery. However, the temporal frequency of this imagery is not ideal, with gaps of 10+ years in some locations.
+
+One final note, any comments made within the TimeSync platform do not export with your final data, so keep that in mind if you are leaving commments that are important for the interpretation of your final labeled trajectories.
+
+## Alternatives to TimeSync
+
+The only alternative to TimeSync that we have come across is [CollectEarth](https://www.collect.earth/) software. In our exploration this software was much more customizable, but lacked the tailored timeseries comparisons that makes TimeSync work so well with LandTrendr. CollectEarth does have many more imagery options, so could be used as a source of auxillery refernce imagery.

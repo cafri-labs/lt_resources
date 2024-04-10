@@ -1,0 +1,11 @@
+.Rhistory
+.DS_Store
+.Rproj.user/*
+rasters/
+.Rproj.user
+/.quarto/
+_book
+_site
+*.html
+*.js
+*.css

@@ -1,0 +1,7 @@
+# Introduction
+This document is a collection of resources for using the LandTrendr change detection algorithm. While it is by no means a comprehensive overveiw of all of the information available on this popular algorithm, it can hopefully serve as a jumping off point for expoloration of the many applications of this algorithm. Additionally, it serves as a discussion of the tuning work undertaken by the [Climate and Applied Forest Research Institue](https://cafri-ny.org/) at SUNY ESF made possible through funding from the Forest Ecosystem Monitoring Collective (FEMC).
+
+   
+    
+
+![ ](files/cafri_logo.png){width=30% fig-align="center"}

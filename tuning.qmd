@@ -1,0 +1,225 @@
+# Tuning
+To improve the performance of the LandTrendr algorithm in the Northern Forest Region we leveraged a dataset of forest harvest records to create several parameter combinations, or tuning, that can be used specifically for the detection of harvest disturbances in the Northern Forest region. Tuning was conducted in two phases - initial parameter testing against single disturbance map outputs, and a second phase of tuning that tested performance against all detected disturbances. This is an overview of the methods used in this project (adapted from Desrochers 2024).  
+
+## Methods
+### Initial Tuning
+The intial tuning was intended to learn the effects of different parameters on algorithm outputs. Here we tested 28 different LandTrendr outputs and evaluated the performance of the tunings using four metrics: precision, recall, F1 score, and overall accuracy. The method of assessment was taken from Desrochers et al. (2022) where we looked for pixel-level match within a +/- 1 year period around the timing of harvest. Pixel states were assigned, tallied, and used to calculate performance metrics. A pixel where LandTrendr and the reference data agreed about a disturbance was a true positive (TP); a pixel where they both agreed about the lack of a disturbance was a true negative (TN). Disagreement was either a false negative (FN) in the case where the algorithm failed to detect a recorded disturbance, or a false positive (FP) in the case of disturbances detected where the reference data did not indicate that one had occurred. 
+
+The selected algorithm parameters for tuning included: max segments, vertex count overshoot, recovery threshold, p-value threshold, and best model proportion. These parameters were selected based on fitting suggestions in Kennedy et al. (2010). Other parameters were held constant at default values. We initially tested each parameter individually, only altering the value of one parameter at a time (Table 1). Once we had determined which parameter values were most effective at increasing algorithm accuracy on their own, we tested combinations of high performing parameters (Table 2). 
+
+```{r, echo=FALSE}
+data <- readr::read_csv("files/tune_params.csv", show_col_types = FALSE)
+library(kableExtra)
+
+kbl(data, 
+    align = 'lc',
+    caption = "Table 1. Individual Parameter Values Tested") %>% 
+    kable_styling("striped")
+
+combos <- readr::read_csv("files/combo_params.csv", show_col_types = FALSE)
+```
+```{r, echo=FALSE}
+kbl(combos, 
+     align = "c",
+     caption = "Table 2. Tested Parameter Combinations") %>% 
+  kable_styling("striped")
+```
+
+
+### Second Round 
+The combinations of algorithm parameters with the highest performance in this initial stage of tuning were carried over to the second stage of tuning and tested against all detected disturbances. A typical change map output produced by the Landtrendr algorihtm can identify at most one disturbance per pixel, however, it is possible, or even likely given a long enough time period, that a given pixel would have multiple disturbances over a given study period. To assess more complex disturbance outputs we utilized two additional LandTrendr outputs: 1) the [vertices identified by the LT algorithm](https://emapr.github.io/LT-GEE/working-with-outputs.html#working-with-outputs), and 2) the [smoothed spectral trajectory fit to those vertices](https://emapr.github.io/LT-GEE/api.html#getfitteddata). Using these output layers, we extracted all pixels that had vertices associated with a decrease in spectral reflectance value. This approach was more inclusive of all possible disturbances, such that multiple disturbances could be identified at the pixel level. The output of this approach was a raster stack with one layer for each year in the study period, hereafter referred to as the ‘losses’ output.  
+	This format, while useful, introduced some challenges for accuracy assessment.  Assessing accuracy on a year-by-year basis was fairly straightforward as once we had created the losses output, it could be matched to the harvest records from that year in a manner similar to the method used in the initial tuning. However, those yearly accuracy values could not simply be summed to represent overall accuracy, as this would have overcounted the FN values within the harvested area, inflating that metric and overall negatively biasing the evaluation of algorithm performance. To illustrate this situation, consider a harvest that is 3×3 pixels (9 pixels total) and takes place over a single year in 2017. In our protocol, all harvests were given a +/- 1 year temporal buffer to account for detection lag and winter harvesting, which means that we considered disturbances in 2016, 2017 and 2018 for our sample harvest. If over those three years we observe in LandTrendr outputs a total of six TP pixels (e.g., one in 2016, two in 2017 and three in 2018) out of nine pixels, this may seem like good performance. However, this does not account for the FN pixels, which in this case would equal 21 (more than 3 times the TP count). A similar issue occurs outside the harvest polygons (but within the tract boundaries) with the TN class. Across all the harvests, this issue creates a bias that inflates the negative classes (FN and TN) and makes it difficult to reliably assess the accuracy of algorithm outputs. 
+	To address this issue, we developed a new method that separately handles the area inside and outside of harvest polygons. The area within the harvest polygons was assessed first. To avoid overcounting FN, we assessed the two-pixel states relevant to harvest areas (TP and FN) on an individual harvest basis. For each harvest we extracted the layers corresponding to the years of harvest (plus the buffer years) from the losses output and counted the number of detected disturbances present within the boundary of the harvest; this number represents the number of TP for this harvest. The number of FN pixels was calculated by subtracting the number of TP from the total number of cells contained within the harvest boundaries. By this method we are taking an “overhead view” of the harvest and allowing all positively identified disturbance pixels to show through, which eliminates the overcounting of FN. Because the outcome of this method is a value that is equivalent to only the total number of pixels in one year within the harvest polygon, the values were multiplied by the number of years of harvest (plus buffer years) so that they would match more closely with outputs for the area outside of the polygons. The TP and FN counts from all harvest polygons were then summed to provide total values for the study period. 
+	The area within the tract boundaries, but outside the harvest polygons was assessed on a yearly basis. Each year in the losses output was masked to remove the areas that were harvested that year. Because this remaining area by definition has no recorded harvests, FP counts can be determined by counting all disturbance pixels in each layer. After this step, TN counts were calculated by subtracting the number of FP from the total number of pixels in the layer, and then FP and TN counts can be summed across all years in the study period to give a total value. As before, we used precision, recall, accuracy and F1 score as performance metrics for comparing LandTrendr tuning outputs.
+
+### Results
+
+```{r, echo = FALSE}
+results <- readr::read_csv("files/tuning_results.csv", show_col_types = FALSE)
+
+kbl(results[ 1:28, c(2, 12:15)],
+    align = "lcccc", 
+    caption = "Table 3. Accuracy metrics for all tested parameter combinations") %>% kable_styling('striped')
+
+```
+
+Figure 1. Comparison of accuracy assessment metrics for algorithm tunings. 
+```{r, echo=FALSE, message=FALSE}
+library(dplyr)
+library(ggplot2)
+
+#remove duration and mmu tunings
+tuning_results <-  head(results, 28)
+
+#create data for graphs
+graph_data <- tuning_results[c(1,2, 12:15)]
+graph_data <- graph_data %>% mutate(
+  rel_precision = Precision - Precision[2],
+  rel_recall = Recall - Recall[2],
+  rel_accuracy = Accuracy - Accuracy[2],
+  rel_F1 = F1 - F1[2]
+)
+
+
+plot_theme <- theme_bw() %+replace%
+  theme(axis.text.x = element_text(angle = -45, hjust = 0))
+
+#intial tuning plot
+single <- graph_data |> dplyr::mutate(short_name = forcats::fct_reorder(short_name, Recall, min)) |> 
+  ggplot() +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_accuracy)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_precision)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_recall)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_F1)) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_accuracy,
+    group = 1,
+    color = "accuracy")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_precision,
+    group = 1,
+    color = "precision")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_recall,
+    group = 1,
+    color = "recall")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_F1,
+    group = 1, 
+    color = "f1")) +
+  plot_theme +
+  labs(
+    title = "Single Disturbance Tunings",
+    x = " ",
+    y = stringr::str_wrap("Change Relative to Default Parameters", width = 20)
+  ) +
+  scale_colour_manual(" ", 
+                         breaks = c("accuracy", "precision", "recall", "f1"),
+                         values = c("#56B4E9","#D55E00", "#E69F00", "#009E73"))
+#data for multiple disturbance plot
+ac5000results <- readr::read_csv("files/multidist_tuning_results.csv", show_col_types = FALSE)
+ac5000results <- ac5000results[c(1, 6:9)]
+names(ac5000results) <- c("short_name", "Precision", 'Recall', "F1", "Accuracy")
+ac5000results <- ac5000results %>% mutate(
+   rel_precision = Precision - Precision[6],
+   rel_recall = Recall - Recall[6],
+   rel_accuracy = Accuracy - Accuracy[6],
+   rel_F1 = F1 - F1[6]
+ )
+ 
+ graph2data <- rbind(ac5000results, graph_data[c(1,2,21:23,28),c(2:10)])
+graph2multi_data <- graph2data[1:6,]
+
+#secondary assesment plot
+multi_dist_plot <- graph2multi_data |> dplyr::mutate(short_name = forcats::fct_reorder(short_name, Recall, min)) |> 
+  ggplot() +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_accuracy)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_precision)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_recall)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = rel_F1)) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_accuracy,
+    group = 1,
+    color = "accuracy")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_precision,
+    group = 1,
+    color = "precision")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_recall,
+    group = 1,
+    color = "recall")) +
+  geom_point(aes(
+    x = short_name,
+    y = rel_F1,
+    group = 1, 
+    color = "f1")) +
+  plot_theme +
+  labs(
+    title = stringr::str_wrap("Multiple Disturbance Tunings", width = 20),
+    x = " ",
+    y = stringr::str_wrap("Change Relative to Default Parameters", width = 20)
+  ) +
+  scale_colour_manual(" ", 
+                      breaks = c("accuracy", "precision", "recall", "f1"),
+                      values = c("#56B4E9","#D55E00", "#E69F00", "#009E73"))
+
+
+
+comparison_data <- tibble("short_name" =  NA, "Change_in_Precision" = NA, "Change_in_Recall" = NA, "Change_in_F1" = NA,  "Change_in_Accuracy" = NA)
+comparison_data <- bind_rows("short_name" =  c("defaults", "combo12", "combo5", "combo6", "combo7", "recovery threshold 0.75" ), 
+                             "Change_in_Precision" = graph2data$Precision[c(6, 1, 2, 3, 4, 5)]- graph2data$Precision[c(8, 12, 9, 10, 11, 7)], 
+                             "Change_in_Recall" = graph2data$Recall[c(6, 1, 2, 3, 4, 5)]- graph2data$Recall[c(8, 12, 9, 10, 11, 7)], 
+                             "Change_in_F1" = graph2data$F1[c(6, 1, 2, 3, 4, 5)]- graph2data$F1[c(8, 12, 9, 10, 11, 7)],  
+                             "Change_in_Accuracy" = graph2data$Accuracy[c(6, 1, 2, 3, 4, 5)]- graph2data$Accuracy[c(8, 12, 9, 10, 11, 7)])
+
+comparison_graph <- comparison_data |> dplyr::mutate(short_name = forcats::fct_reorder(short_name, Change_in_Recall, min)) |> 
+  ggplot() +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = Change_in_Accuracy)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = Change_in_Precision)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = Change_in_Recall)) +
+  geom_segment(aes(x = short_name,
+                   xend = short_name, y = 0, yend = Change_in_F1)) +
+  geom_point(aes(
+    x = short_name,
+    y = Change_in_Accuracy,
+    group = 1,
+    color = "accuracy")) +
+  geom_point(aes(
+    x = short_name,
+    y = Change_in_Precision,
+    group = 1,
+    color = "precision")) +
+  geom_point(aes(
+    x = short_name,
+    y = Change_in_Recall,
+    group = 1,
+    color = "recall")) +
+  geom_point(aes(
+    x = short_name,
+    y = Change_in_F1,
+    group = 1, 
+    color = "f1")) +
+  plot_theme +
+  labs(
+    title = stringr::str_wrap("Comparison Between Single and Multiple Disturbance Tunings", width = 30),
+    x = " ",
+    y = stringr::str_wrap("Difference Between Single and Multiple Disturbance Detection", width = 20)
+  ) +
+  scale_colour_manual(" ", 
+                      breaks = c("accuracy", "precision", "recall", "f1"),
+                      values = c("#56B4E9","#D55E00", "#E69F00", "#009E73"))
+library(patchwork)
+
+
+single 
+
+```
+
+```{r, echo = FALSE}
+multi_dist_plot + comparison_graph + plot_layout(guides ="collect")
+```
+
+
+
+## Recomended Tunings
+
+Through this tuning process we found the recovery threshold, max segments, the p-value threshold parameters to be the most important for improving the detection of harvest disturbances in the Northern Forest Region. In selecting the ‘best’ tuning, we looked for parameter combinations that maximized F1 and recall, while minimizing the decrease in precision (Figure 1) . The parameter set that yielded best overall improvement of performance metrics was **‘combination 6’**. This group of parameters yielded outputs with the highest overall accuracy and third-highest F1 score, while maintaining  relatively high precision (Table 3). Other parameter combinations could be selected to maximize specific metrics, as follows: combination 12 for F1, recovery threshold 0.5 for precision, combination 7 for recall. 

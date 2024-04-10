@@ -1,0 +1,15 @@
+﻿Parameter,Description,Default
+spike threshold,Sets the size of abrupt deviation in spectral value that is considered a spike. Smaller values filter out spikes more aggressively,0.9
+p-value threshold,The p-value threshold for trajectory selection. Trajectories with p-values that exceed this threshold are considered no change. ,0.05
+max segments,The maximum number of segments allowed in trajectory fitting,
+vertex count overshoot,Initial regression-based detection of potential vertices can overshoot the number of vertices allowed by max segments by this value; angle-based culling is used to return to the desired number of vertices if overshoot occurs. This allows for a mix of criteria for vertex identification.,3
+recovery threshold,Disallows candidate segment that have a recovery rate faster than 1/recovery threshold (in years).,0.25
+prevent one year recovery,"Disallows all segments with recovery rates equal to one year, either true or false. ",FALSE
+best model proportion,Allows models with more vertices than allowed by max segments to be chosen if their p-value is no more than (2 – best model proportion) times the p-value of the best model.,0.75
+minimum observations needed,Minimum number of cloud free images needed to perform fitting.,6
+delta,Change type to map – either loss (disturbance) or gain (recovery/growth). ,loss*
+sort,"The type of change to identify if there is more than one change event in the pixel of interest – one of greatest, least, newest, oldest, fastest, slowest.",greatest*
+magnitude,Either a minimum or maximum value for filtering change events by change in spectral reflectance value; filtering is not required.,> 50*
+duration,Either a minimum or maximum value for filtering change events by length of event. Filtering by disturbance duration is not required.,< 4*
+preval,Either a minimum or maximum value for filtering change events by the pre-change value of the spectral index. Filtering by preval is not required.,> 300*
+minimum mapping unit (mmu),Indicates the smallest allowable disturbance patch. Pixels disturbed in the same year and adjacent following an 8-neightbor rule are considered to be of the same patch. Filtering by mmu is not required.,7*
