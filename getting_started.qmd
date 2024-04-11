@@ -5,8 +5,6 @@ Both the original LandTrendr paper [Kennedy et al. 2010](https://sciencedirect.c
 
 For more specific information on LandTrendr in GEE, the holy grail is the [eMapR LT GEE Guide](https://emapr.github.io/LT-GEE/index.html). This document walks you through running LandTrendr in GEE step by step, with example code. Speaking of code, most of us in the CAFRI lab use the [eMapR API code](https://emapr.github.io/LT-GEE/example-scripts.html) (or derivatives of it) when running LandTrendr. These scripts are the easiest place to start if you would like to run LandTrendr on your own. For quick reference, the [GEE developers guide](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr) has good information about algorithm parameter defaults.   
 
-For those who may be interested in exploring LandTrendr without wading into running the algorithm themselves, the eMapR group have also developed several [UI applications](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr) of LandTrendr that offer several different ways to interact with LandTrendr timeseries data.
-
 
 ## Understanding algorithm parameters
 The LandTrendr algorithm has several parameters that a user can adjust to control how the algorithm segments the time series of spectral data. While each of these parameters serves a specific purpose, there are some that we have found to be more useful than others. For more detailed discussion of each parameter, and their sensitivity, see [Kennedy et al. 2010](https://sciencedirect.com/science/article/pii/S0034425710002245?via%3Dihub). For information on adjusting these parameters for using Landtrendr in the Northern Forest Region see [Algorithm Tuning](tuning.qmd)  

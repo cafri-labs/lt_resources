@@ -19,6 +19,7 @@ website:
      - getting_started.qmd
      - tuning.qmd
      - timesync.qmd
+     - tips_tricks.qmd
 
 format:
   html:

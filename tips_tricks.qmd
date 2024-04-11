@@ -1,0 +1,7 @@
+# Tips and Tricks
+A few miscelaneous thought and observations from several years of using LandTrendr
+
+-	Keeping careful track of what parameters you used to generate which outputs can save you lots of headaches down the line as there is no way to tell from an output what parameters were used to generate it once it’s been spun up. We recommended both a consistent naming convention and saving changes to your script between each output as GEE keeps a version history of your scripts. 
+- We have found that flucuations of water levels in wetlands areas often shows up disturbance in LT outputs, which depending on your purposes may not be ideal. Unfortunaltey these fluctuations do result in very real changes in spectral values, and closely resemble other types of changes that may be of interest. 
+- On a related note, we highly recomend applying a water mask to your LT outputs as predictions for bodies of water are typically meaningless. Depeneding on the area that you are interested in, masking out developed areas may also be useful.
+- For those who may be interested in exploring LandTrendr without wading into running the algorithm themselves, the eMapR group have also developed several [UI applications](https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr) of LandTrendr that offer several different ways to interact with LandTrendr timeseries data.
