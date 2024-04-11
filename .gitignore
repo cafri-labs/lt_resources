@@ -7,5 +7,4 @@ rasters/
 _book
 _site
 *.html
-*.js
 *.css
