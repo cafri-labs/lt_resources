@@ -30,8 +30,6 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./tuning.html" rel="next">
-<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -68,8 +66,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 </head>
@@ -83,7 +79,9 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./getting_started.html">Getting Started</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      LT-GEE Lessons and Resources
+      </li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -123,7 +121,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./getting_started.html" class="sidebar-item-text sidebar-link active">
+  <a href="./getting_started.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Getting Started</span></a>
   </div>
 </li>
@@ -155,19 +153,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#getting-started" id="toc-getting-started" class="nav-link active" data-scroll-target="#getting-started">Getting Started</a>
+  <li><a href="#code" id="toc-code" class="nav-link active" data-scroll-target="#code">Code</a>
   <ul class="collapse">
-  <li><a href="#recommended-papers-and-resources" id="toc-recommended-papers-and-resources" class="nav-link" data-scroll-target="#recommended-papers-and-resources">Recommended papers and resources</a></li>
-  <li><a href="#understanding-algorithm-parameters" id="toc-understanding-algorithm-parameters" class="nav-link" data-scroll-target="#understanding-algorithm-parameters">Understanding algorithm parameters</a>
-  <ul class="collapse">
-  <li><a href="#recovery-threshold" id="toc-recovery-threshold" class="nav-link" data-scroll-target="#recovery-threshold">Recovery Threshold</a></li>
-  <li><a href="#max-segments" id="toc-max-segments" class="nav-link" data-scroll-target="#max-segments">Max Segments</a></li>
-  <li><a href="#mapping-parameters" id="toc-mapping-parameters" class="nav-link" data-scroll-target="#mapping-parameters">Mapping Parameters</a></li>
-  </ul></li>
-  <li><a href="#selecting-imagery" id="toc-selecting-imagery" class="nav-link" data-scroll-target="#selecting-imagery">Selecting imagery</a></li>
+  <li><a href="#google-earth-engine" id="toc-google-earth-engine" class="nav-link" data-scroll-target="#google-earth-engine">Google Earth Engine</a></li>
+  <li><a href="#accuracy-assesment" id="toc-accuracy-assesment" class="nav-link" data-scroll-target="#accuracy-assesment">Accuracy Assesment</a></li>
   </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/edit/main/getting_started.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/edit/main/code.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -175,136 +167,23 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<section id="getting-started" class="level1">
-<h1>Getting Started</h1>
-<section id="recommended-papers-and-resources" class="level2">
-<h2 class="anchored" data-anchor-id="recommended-papers-and-resources">Recommended papers and resources</h2>
-<p>Both the original LandTrendr paper <a href="https://sciencedirect.com/science/article/pii/S0034425710002245?via%3Dihub">Kennedy et al.&nbsp;2010</a> and the GEE engine implementation paper <a href="https://www.mdpi.com/2072-4292/10/5/691">Kennedy et al.&nbsp;2018</a> are excellent jumping off points for understanding how the algorithm works.</p>
-<p>For more specific information on LandTrendr in GEE, the holy grail is the <a href="https://emapr.github.io/LT-GEE/index.html">eMapR LT GEE Guide</a>. This document walks you through running LandTrendr in GEE step by step, with example code. Speaking of code, most of us in the CAFRI lab use the <a href="https://emapr.github.io/LT-GEE/example-scripts.html">eMapR API code</a> (or derivatives of it) when running LandTrendr. These scripts are the easiest place to start if you would like to run LandTrendr on your own. For quick reference, the <a href="https://developers.google.com/earth-engine/apidocs/ee-algorithms-temporalsegmentation-landtrendr">GEE developers guide</a> has good information about algorithm parameter defaults.</p>
+<section id="code" class="level1">
+<h1>Code</h1>
+<section id="google-earth-engine" class="level2">
+<h2 class="anchored" data-anchor-id="google-earth-engine">Google Earth Engine</h2>
+<p>The scripts that we used to generate LandTrendr outputs are heavily based on the <a href="https://emapr.github.io/LT-GEE/api.html">eMapR API</a>. They are also available in the <a href="https://github.com/cafri-labs/lt_for_femc/tree/main/scripts">git hub repo</a> for this document.</p>
+<ul>
+<li><p><a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/change_map.js">change map outpus</a></p></li>
+<li><p><a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/vertex_ftv.js">ftv and vertex outputs</a></p></li>
+</ul>
 </section>
-<section id="understanding-algorithm-parameters" class="level2">
-<h2 class="anchored" data-anchor-id="understanding-algorithm-parameters">Understanding algorithm parameters</h2>
-<p>The LandTrendr algorithm has several parameters that a user can adjust to control how the algorithm segments the time series of spectral data. While each of these parameters serves a specific purpose, there are some that we have found to be more useful than others. For more detailed discussion of each parameter, and their sensitivity, see <a href="https://sciencedirect.com/science/article/pii/S0034425710002245?via%3Dihub">Kennedy et al.&nbsp;2010</a>. For information on adjusting these parameters for using Landtrendr in the Northern Forest Region see <a href="./tuning.html">Algorithm Tuning</a></p>
-<section id="recovery-threshold" class="level3">
-<h3 class="anchored" data-anchor-id="recovery-threshold">Recovery Threshold</h3>
-<p>The recovery threshold parameter sets the minimum allowable length of time after a disturbance event for spectral recovery. That is, this parameter control what length of time is ‘too fast’ to see a recovery of spectral values. By default this time period is 4 years (recovery period is the inverse of recovery threshold, 0.25 = 4 year recovery period) which in the Northeast is quite a long time, as our forest disturbance events tend to be low intensity and there is often advanced regeneration ready to fill any new canopy gaps. This parameter is the first parameter that we adjust in the CAFRI lab, often setting it to 0.75 (see <a href="./tuning.html">Algorithm Tuning</a> for more).</p>
-</section>
-<section id="max-segments" class="level3">
-<h3 class="anchored" data-anchor-id="max-segments">Max Segments</h3>
-<p>This parameter is the only algorithm parameter without a default value as the appropriate number of segments depends on how long of a time period you are studying. For example, if you have a 3 year time period you wouldn’t want to have the same maximum number of segments as a 30 year time period, otherwise you would have a segmentation that is much more complex than would be reasonable for a short amount of time. Therefore the general rule is, the longer the time period, the more segments that you need.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<table class="table table-striped table-sm small" data-quarto-postprocess="true">
-<caption>LandTrendr Segmentation Parameters</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Description</th>
-<th style="text-align: center;" data-quarto-table-cell-role="th">Default</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">spike threshold</td>
-<td style="text-align: left;">Sets the size of abrupt deviation in spectral value that is considered a spike. Smaller values filter out spikes more aggressively</td>
-<td style="text-align: center;">0.9</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">p-value threshold</td>
-<td style="text-align: left;">The p-value threshold for trajectory selection. Trajectories with p-values that exceed this threshold are considered no change.</td>
-<td style="text-align: center;">0.05</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">max segments</td>
-<td style="text-align: left;">The maximum number of segments allowed in trajectory fitting</td>
-<td style="text-align: center;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">vertex count overshoot</td>
-<td style="text-align: left;">Initial regression-based detection of potential vertices can overshoot the number of vertices allowed by max segments by this value; angle-based culling is used to return to the desired number of vertices if overshoot occurs. This allows for a mix of criteria for vertex identification.</td>
-<td style="text-align: center;">3</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">recovery threshold</td>
-<td style="text-align: left;">Disallows candidate segment that have a recovery rate faster than 1/recovery threshold (in years).</td>
-<td style="text-align: center;">0.25</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">prevent one year recovery</td>
-<td style="text-align: left;">Disallows all segments with recovery rates equal to one year, either true or false.</td>
-<td style="text-align: center;">FALSE</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">best model proportion</td>
-<td style="text-align: left;">Allows models with more vertices than allowed by max segments to be chosen if their p-value is no more than (2 – best model proportion) times the p-value of the best model.</td>
-<td style="text-align: center;">0.75</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">minimum observations needed</td>
-<td style="text-align: left;">Minimum number of cloud free images needed to perform fitting.</td>
-<td style="text-align: center;">6</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-</div>
-</section>
-<section id="mapping-parameters" class="level3">
-<h3 class="anchored" data-anchor-id="mapping-parameters">Mapping Parameters</h3>
-<p>There is also a second set of parameters that are easily adjusted by the user that control which parts of the segmented time series are exported to a change map output. These parameters can greatly affect how your change map appears, and as such are important to understand. For more details on these parameters see the <a href="https://emapr.github.io/LT-GEE/api.html#getchangemap">eMapR API documentation</a>.</p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<table class="table table-striped table-sm small" data-quarto-postprocess="true">
-<caption>LandTrendr Change Map Parameters</caption>
-<thead>
-<tr class="header">
-<th style="text-align: left;" data-quarto-table-cell-role="th">Parameter</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">delta</td>
-<td style="text-align: left;">Change type to map – either loss (disturbance) or gain (recovery/growth).</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">sort</td>
-<td style="text-align: left;">The type of change to identify if there is more than one change event in the pixel of interest – one of greatest, least, newest, oldest, fastest, slowest.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">magnitude</td>
-<td style="text-align: left;">Either a minimum or maximum value for filtering change events by change in spectral reflectance value; filtering is not required.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">duration</td>
-<td style="text-align: left;">Either a minimum or maximum value for filtering change events by length of event. Filtering by disturbance duration is not required.</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">preval</td>
-<td style="text-align: left;">Either a minimum or maximum value for filtering change events by the pre-change value of the spectral index. Filtering by preval is not required.</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">minimum mapping unit (mmu)</td>
-<td style="text-align: left;">Indicates the smallest allowable disturbance patch. Pixels disturbed in the same year and adjacent following an 8-neightbor rule are considered to be of the same patch. Filtering by mmu is not required.</td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="selecting-imagery" class="level2">
-<h2 class="anchored" data-anchor-id="selecting-imagery">Selecting imagery</h2>
-<p>One thing to be aware of when you are running LandTrendr is what imagery you are feeding into the algorithm. If you are using one of the eMapR scripts, the selection of imagery happens under the hood in a separate piece of code that is called to actually run the algorithm. As of April 2024, all the eMapR scripts default to Collection 2 Landsat imagery. For most users, who want to run Landtrendr on Landsat imagery, this is not a problem. However, if you want to use other timeseries data or if you are generating outputs over long periods of time, you may need to adjust this.</p>
-<p>Additionally, if you are using the eMapR scripts, their API is designed to automatically be compatible with <a href="https://emapr.github.io/LT-GEE/api.html#spectral-index-codes">many common spectral indcies</a> which makes it easy to switch between indices. In the CAFRI lab we almost always run LandTrendr on NBR, as we have found it to have the best performance.</p>
+<section id="accuracy-assesment" class="level2">
+<h2 class="anchored" data-anchor-id="accuracy-assesment">Accuracy Assesment</h2>
+<p>We have also included in that <a href="https://github.com/cafri-labs/lt_for_femc/tree/main/scripts">git hub repo</a> several scripts that we used to process and assess the LandTrendr outputs for our <a href="./tuning.html">tuning work</a>.</p>
+<ul>
+<li><p><a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/single_disturbance_accuracy_assesment.R">initial tuning</a></p></li>
+<li><p><a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/multi_disturbance_accuracy_assesment.R">secondary tuning</a> - this script requires outputs from both <a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/create_loss_layer.R">this</a> (processes the ftv outputs) and <a href="https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/harvest_brick.R">this</a> (rasterizes reference data)</p></li>
+</ul>
 
 
 </section>
@@ -720,21 +599,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
-  <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Introduction">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introduction</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="./tuning.html" class="pagination-link" aria-label="Tuning">
-        <span class="nav-page-text">Tuning</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
 </div> <!-- /content -->
 
 
 
 
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/edit/main/getting_started.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/edit/main/code.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="hhttps://github.com/cafri-labs/lt_for_femc/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

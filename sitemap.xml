@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://cafri-labs.github.io/lt_user_guide/timesync.html</loc>
-    <lastmod>2024-04-11T14:18:47.536Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cafri-labs.github.io/lt_user_guide/tuning.html</loc>
-    <lastmod>2024-04-11T14:18:47.536Z</lastmod>
-  </url>
-  <url>
-    <loc>https://cafri-labs.github.io/lt_user_guide/index.html</loc>
-    <lastmod>2024-04-11T14:18:47.536Z</lastmod>
+    <loc>https://cafri-labs.github.io/lt_user_guide/tips_tricks.html</loc>
+    <lastmod>2024-04-11T20:32:50.312Z</lastmod>
   </url>
   <url>
     <loc>https://cafri-labs.github.io/lt_user_guide/getting_started.html</loc>
-    <lastmod>2024-04-11T14:18:47.536Z</lastmod>
+    <lastmod>2024-04-11T20:32:50.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cafri-labs.github.io/lt_user_guide/tuning.html</loc>
+    <lastmod>2024-04-11T20:32:50.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cafri-labs.github.io/lt_user_guide/index.html</loc>
+    <lastmod>2024-04-11T20:32:50.312Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cafri-labs.github.io/lt_user_guide/code.html</loc>
+    <lastmod>2024-04-11T20:32:50.308Z</lastmod>
+  </url>
+  <url>
+    <loc>https://cafri-labs.github.io/lt_user_guide/timesync.html</loc>
+    <lastmod>2024-04-11T20:32:50.312Z</lastmod>
   </url>
 </urlset>
