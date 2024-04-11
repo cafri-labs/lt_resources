@@ -94,21 +94,30 @@
     "href": "code.html",
     "title": "Code",
     "section": "",
-    "text": "The scripts that we used to generate LandTrendr outputs are heavily based on the eMapR API. They are also available in the git hub repo for this document.\n\nchange map outpus\nftv and vertex outputs\n\n\n\n\nWe have also included in that git hub repo several scripts that we used to process and assess the LandTrendr outputs for our tuning work.\n\ninitial tuning\nsecondary tuning - this script requires outputs from both this (processes the ftv outputs) and this (rasterizes reference data)"
+    "text": "The scripts that we used to generate LandTrendr outputs are heavily based on the eMapR API. They are also available in the git hub repo for this document.\n\nchange map outpus\nftv and vertex outputs\n\n\n\n\nWe have also included in that git hub repo several scripts that we used to process and assess the LandTrendr outputs for our tuning work.\n\nInitial tuning\nSecondary tuning - this script requires outputs from both this (processes the ftv outputs) and this (rasterizes reference data)",
+    "crumbs": [
+      "Code"
+    ]
   },
   {
     "objectID": "code.html#google-earth-engine",
     "href": "code.html#google-earth-engine",
     "title": "Code",
     "section": "",
-    "text": "The scripts that we used to generate LandTrendr outputs are heavily based on the eMapR API. They are also available in the git hub repo for this document.\n\nchange map outpus\nftv and vertex outputs"
+    "text": "The scripts that we used to generate LandTrendr outputs are heavily based on the eMapR API. They are also available in the git hub repo for this document.\n\nchange map outpus\nftv and vertex outputs",
+    "crumbs": [
+      "Code"
+    ]
   },
   {
     "objectID": "code.html#accuracy-assesment",
     "href": "code.html#accuracy-assesment",
     "title": "Code",
     "section": "",
-    "text": "We have also included in that git hub repo several scripts that we used to process and assess the LandTrendr outputs for our tuning work.\n\ninitial tuning\nsecondary tuning - this script requires outputs from both this (processes the ftv outputs) and this (rasterizes reference data)"
+    "text": "We have also included in that git hub repo several scripts that we used to process and assess the LandTrendr outputs for our tuning work.\n\nInitial tuning\nSecondary tuning - this script requires outputs from both this (processes the ftv outputs) and this (rasterizes reference data)",
+    "crumbs": [
+      "Code"
+    ]
   },
   {
     "objectID": "timesync.html",
