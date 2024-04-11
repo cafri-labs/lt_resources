@@ -12,9 +12,9 @@ The scripts that we used to generate LandTrendr outputs are heavily based on the
 ## Accuracy Assesment
   We have also included in that [git hub repo](https://github.com/cafri-labs/lt_for_femc/tree/main/scripts) several scripts that we used to process and assess the LandTrendr outputs for our [tuning work](tuning.qmd). 
   
-  - [initial tuning](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/single_disturbance_accuracy_assesment.R)
+  - [Initial tuning](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/single_disturbance_accuracy_assesment.R)
   
-  - [secondary tuning](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/multi_disturbance_accuracy_assesment.R) -  this script requires outputs from both [this](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/create_loss_layer.R) (processes the ftv outputs) and [this](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/harvest_brick.R) (rasterizes reference data)
+  - [Secondary tuning](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/multi_disturbance_accuracy_assesment.R) -  this script requires outputs from both [this](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/create_loss_layer.R) (processes the ftv outputs) and [this](https://github.com/cafri-labs/lt_for_femc/blob/main/scripts/harvest_brick.R) (rasterizes reference data)
   
 
   

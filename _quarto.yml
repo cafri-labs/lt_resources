@@ -20,6 +20,7 @@ website:
      - tuning.qmd
      - timesync.qmd
      - tips_tricks.qmd
+     - code.qmd
 
 format:
   html:
