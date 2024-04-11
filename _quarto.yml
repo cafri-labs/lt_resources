@@ -1,10 +1,13 @@
 project:
   type: website
 
+execute:
+  freeze: auto
+
 website:
   title: "LT-GEE Lessons and Resources"
-  site-url: https://cafri-labs.github.io/lab-manual/
-  repo-url: https://github.com/cafri-labs/lab-manual
+  site-url: https://cafri-labs.github.io/lt_user_guide/
+  repo-url: hhttps://github.com/cafri-labs/lt_for_femc
   repo-actions: [edit,issue]
   reader-mode: true
   page-navigation: true
